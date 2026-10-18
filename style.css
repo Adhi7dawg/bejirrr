@@ -345,3 +345,65 @@ h1 {
   padding: 28px 20px;
   border-top: 1px solid var(--garis);
 }
+
+/* ===================== HALAMAN GALERI ===================== */
+.halaman-lebar {
+  max-width: 1100px;
+}
+
+.galeri {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.foto-item {
+  background: var(--kartu);
+  border: 1px solid var(--garis);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.foto-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--utama);
+}
+
+.foto-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.foto-item figcaption {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--teks-redup);
+}
+
+/* foto besar saat diklik */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.88);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.lightbox.tampil {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 16px;
+  border: 2px solid rgba(238, 202, 166, 0.7);
+}
