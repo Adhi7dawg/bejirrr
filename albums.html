@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albums · ADHI OKE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="brand">ADHI OKE</a>
+    <div class="menu">
+      <a href="index.html" class="menu-btn">Beranda</a>
+      <a href="profil.html" class="menu-btn">Profil</a>
+      <a href="gallery.html" class="menu-btn">Galeri</a>
+      <a href="albums.html" class="menu-btn aktif">Albums</a>
+    </div>
+  </nav>
+
+  <main class="halaman halaman-lebar">
+    <p class="label">03 / ALBUMS</p>
+    <h1 class="judul-halaman gradasi">Albums</h1>
+    <p class="pengantar">5 album favorit gw bulan ini.</p>
+
+    <!-- diisi otomatis oleh script di bawah -->
+    <section class="album-grid" id="albumGrid"></section>
+
+    <a href="index.html" class="btn btn-outline">← Kembali ke Beranda</a>
+  </main>
+
+  <footer class="footer">© Adhi Sasongko</footer>
+
+  <!-- JENDELA DETAIL ALBUM -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mJudul">
+    <div class="modal-isi">
+      <button class="modal-tutup" id="mTutup" aria-label="Tutup">✕</button>
+      <img class="modal-cover" id="mCover" src="" alt="">
+      <h2 id="mJudul"></h2>
+      <p class="modal-artist" id="mArtist"></p>
+      <p class="modal-deskripsi" id="mDeskripsi"></p>
+      <h3>Tracklist</h3>
+      <ol class="tracklist" id="mTracks"></ol>
+      <a class="btn btn-spotify" id="mSpotify" href="#" target="_blank" rel="noopener">Dengarkan di Spotify</a>
+    </div>
+  </div>
+
+  <script>
+    // ====== EDIT DATA ALBUM DI SINI ======
+    // cover  : nama file di folder imgalbm/
+    // spotify: ganti dengan link album asli di Spotify
+    const albums = [
+      {
+        judul: "Judul Album 1",
+        artist: "Nama Artist 1",
+        cover: "imgalbm/album1.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        tracks: ["Lorem Ipsum", "Dolor Sit Amet", "Consectetur", "Adipiscing Elit", "Sed Do Eiusmod"],
+        spotify: "https://open.spotify.com/"
+      },
+      {
+        judul: "Judul Album 2",
+        artist: "Nama Artist 2",
+        cover: "imgalbm/album2.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+        tracks: ["Lorem Ipsum", "Dolor Sit Amet", "Consectetur", "Adipiscing Elit", "Sed Do Eiusmod"],
+        spotify: "https://open.spotify.com/"
+      },
+      {
+        judul: "Judul Album 3",
+        artist: "Nama Artist 3",
+        cover: "imgalbm/album3.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit.",
+        tracks: ["Lorem Ipsum", "Dolor Sit Amet", "Consectetur", "Adipiscing Elit", "Sed Do Eiusmod"],
+        spotify: "https://open.spotify.com/"
+      },
+      {
+        judul: "Judul Album 4",
+        artist: "Nama Artist 4",
+        cover: "imgalbm/album4.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident.",
+        tracks: ["Lorem Ipsum", "Dolor Sit Amet", "Consectetur", "Adipiscing Elit", "Sed Do Eiusmod"],
+        spotify: "https://open.spotify.com/"
+      },
+      {
+        judul: "Judul Album 5",
+        artist: "Nama Artist 5",
+        cover: "imgalbm/album5.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        tracks: ["Lorem Ipsum", "Dolor Sit Amet", "Consectetur", "Adipiscing Elit", "Sed Do Eiusmod"],
+        spotify: "https://open.spotify.com/"
+      }
+    ];
+    // =====================================
+
+    const grid = document.getElementById("albumGrid");
+    const modal = document.getElementById("modal");
+    let terakhirFokus = null;
+
+    albums.forEach((a, i) => {
+      const tombol = document.createElement("button");
+      tombol.className = "album-item";
+      tombol.type = "button";
+      tombol.innerHTML =
+        '<img src="' + a.cover + '" alt="Cover ' + a.judul + '" loading="lazy">' +
+        '<div class="album-info"><strong></strong><span></span></div>';
+      tombol.querySelector("strong").textContent = a.judul;
+      tombol.querySelector("span").textContent = a.artist;
+      tombol.addEventListener("click", () => buka(i, tombol));
+      grid.appendChild(tombol);
+    });
+
+    function buka(i, pemicu) {
+      const a = albums[i];
+      terakhirFokus = pemicu;
+      document.getElementById("mCover").src = a.cover;
+      document.getElementById("mCover").alt = "Cover " + a.judul;
+      document.getElementById("mJudul").textContent = a.judul;
+      document.getElementById("mArtist").textContent = a.artist;
+      document.getElementById("mDeskripsi").textContent = a.deskripsi;
+      document.getElementById("mSpotify").href = a.spotify;
+      const ol = document.getElementById("mTracks");
+      ol.innerHTML = "";
+      a.tracks.forEach(t => {
+        const li = document.createElement("li");
+        li.textContent = t;
+        ol.appendChild(li);
+      });
+      modal.classList.add("tampil");
+      document.body.style.overflow = "hidden";
+      document.getElementById("mTutup").focus();
+    }
+
+    function tutup() {
+      modal.classList.remove("tampil");
+      document.body.style.overflow = "";
+      if (terakhirFokus) terakhirFokus.focus();
+    }
+
+    document.getElementById("mTutup").addEventListener("click", tutup);
+    modal.addEventListener("click", e => { if (e.target === modal) tutup(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") tutup(); });
+  </script>
+
+</body>
+</html>
