@@ -30,6 +30,9 @@
     <!-- diisi otomatis oleh script di bawah -->
     <section class="album-grid" id="albumGrid"></section>
 
+    <h2 class="sub-judul">Top Tracks</h2>
+    <section class="track-list" id="trackList"></section>
+
     <a href="index.html" class="btn btn-outline">← Kembali ke Beranda</a>
   </main>
 
@@ -43,8 +46,10 @@
       <h2 id="mJudul"></h2>
       <p class="modal-artist" id="mArtist"></p>
       <p class="modal-deskripsi" id="mDeskripsi"></p>
-      <h3>Tracklist</h3>
-      <ol class="tracklist" id="mTracks"></ol>
+      <div id="mTrackWrap">
+        <h3>Tracklist</h3>
+        <ol class="tracklist" id="mTracks"></ol>
+      </div>
       <a class="btn btn-spotify" id="mSpotify" href="#" target="_blank" rel="noopener">Dengarkan di Spotify</a>
     </div>
   </div>
@@ -155,11 +160,32 @@
     ];
     // =====================================
 
+    // ====== EDIT DATA TOP TRACKS DI SINI ======
+    // cover: nama file di folder imgalbm/
+    const topTracks = [
+      { judul: "Judul Lagu 1", artist: "Nama Artist 1", cover: "imgalbm/track1.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+        spotify: "https://open.spotify.com/" },
+      { judul: "Judul Lagu 2", artist: "Nama Artist 2", cover: "imgalbm/track2.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud.",
+        spotify: "https://open.spotify.com/" },
+      { judul: "Judul Lagu 3", artist: "Nama Artist 3", cover: "imgalbm/track3.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit.",
+        spotify: "https://open.spotify.com/" },
+      { judul: "Judul Lagu 4", artist: "Nama Artist 4", cover: "imgalbm/track4.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat.",
+        spotify: "https://open.spotify.com/" },
+      { judul: "Judul Lagu 5", artist: "Nama Artist 5", cover: "imgalbm/track5.jpg",
+        deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sunt in culpa qui officia deserunt.",
+        spotify: "https://open.spotify.com/" }
+    ];
+    // ==========================================
+
     const grid = document.getElementById("albumGrid");
     const modal = document.getElementById("modal");
     let terakhirFokus = null;
 
-    albums.forEach((a, i) => {
+    albums.forEach(a => {
       const tombol = document.createElement("button");
       tombol.className = "album-item";
       tombol.type = "button";
@@ -168,12 +194,27 @@
         '<div class="album-info"><strong></strong><span></span></div>';
       tombol.querySelector("strong").textContent = a.judul;
       tombol.querySelector("span").textContent = a.artist;
-      tombol.addEventListener("click", () => buka(i, tombol));
+      tombol.addEventListener("click", () => buka(a, tombol));
       grid.appendChild(tombol);
     });
 
-    function buka(i, pemicu) {
-      const a = albums[i];
+    const daftarTrack = document.getElementById("trackList");
+    topTracks.forEach(t => {
+      const tombol = document.createElement("button");
+      tombol.className = "track-item";
+      tombol.type = "button";
+      tombol.innerHTML =
+        '<img src="' + t.cover + '" alt="Cover ' + t.judul + '" loading="lazy">' +
+        '<div class="track-info"><strong></strong><span></span></div>' +
+        '<span class="track-panah" aria-hidden="true">›</span>';
+      tombol.querySelector("strong").textContent = t.judul;
+      tombol.querySelector(".track-info span").textContent = t.artist;
+      tombol.addEventListener("click", () => buka(t, tombol));
+      daftarTrack.appendChild(tombol);
+    });
+
+    // a = album (punya tracks) atau single track (tanpa tracks)
+    function buka(a, pemicu) {
       terakhirFokus = pemicu;
       document.getElementById("mCover").src = a.cover;
       document.getElementById("mCover").alt = "Cover " + a.judul;
@@ -183,11 +224,15 @@
       document.getElementById("mSpotify").href = a.spotify;
       const ol = document.getElementById("mTracks");
       ol.innerHTML = "";
-      a.tracks.forEach(t => {
-        const li = document.createElement("li");
-        li.textContent = t;
-        ol.appendChild(li);
-      });
+      const adaTracks = Array.isArray(a.tracks);
+      document.getElementById("mTrackWrap").style.display = adaTracks ? "" : "none";
+      if (adaTracks) {
+        a.tracks.forEach(t => {
+          const li = document.createElement("li");
+          li.textContent = t;
+          ol.appendChild(li);
+        });
+      }
       modal.classList.add("tampil");
       document.body.style.overflow = "hidden";
       document.getElementById("mTutup").focus();

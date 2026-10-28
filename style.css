@@ -575,3 +575,75 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   .modal-isi { animation: none; }
 }
+
+/* ===================== TOP TRACKS ===================== */
+.sub-judul {
+  font-size: 22px;
+  margin: 8px 0 14px;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 16px 10px 10px;
+  background: var(--kartu);
+  border: 1px solid var(--garis);
+  border-radius: 18px;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.track-item:hover,
+.track-item:focus-visible {
+  transform: translateX(4px);
+  border-color: var(--utama);
+  outline: none;
+}
+
+.track-item img {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #2a211a;
+}
+
+.track-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.track-info strong,
+.track-info span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-info strong {
+  font-size: 15px;
+}
+
+.track-info span {
+  font-size: 13px;
+  color: var(--teks-redup);
+}
+
+.track-panah {
+  font-size: 24px;
+  color: var(--teks-redup);
+}
