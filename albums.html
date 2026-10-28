@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albums · ADHI OKE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="brand">ADHI OKE</a>
+    <div class="menu">
+      <a href="index.html" class="menu-btn">Beranda</a>
+      <a href="profil.html" class="menu-btn">Profil</a>
+      <a href="gallery.html" class="menu-btn">Galeri</a>
+      <a href="albums.html" class="menu-btn aktif">Albums</a>
+    </div>
+  </nav>
+
+  <main class="halaman halaman-lebar">
+    <p class="label">03 / ALBUMS</p>
+    <h1 class="judul-halaman artistgradasi">Albums</h1>
+    <p class="pengantar">5 album favorit gw bulan ini.</p>
+
+    <!-- diisi otomatis oleh script di bawah -->
+    <section class="album-grid" id="albumGrid"></section>
+
+    <h2 class="sub-judul">Top Tracks</h2>
+    <section class="track-list" id="trackList"></section>
+
+    <a href="index.html" class="btn btn-outline">← Kembali ke Beranda</a>
+  </main>
+
+  <footer class="footer">© Adhi Sasongko</footer>
+
+  <!-- JENDELA DETAIL ALBUM -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mJudul">
+    <div class="modal-isi">
+      <button class="modal-tutup" id="mTutup" aria-label="Tutup">✕</button>
+      <img class="modal-cover" id="mCover" src="" alt="">
+      <h2 id="mJudul"></h2>
+      <p class="modal-artist" id="mArtist"></p>
+      <p class="modal-deskripsi" id="mDeskripsi"></p>
+      <div id="mTrackWrap">
+        <h3>Tracklist</h3>
+        <ol class="tracklist" id="mTracks"></ol>
+      </div>
+      <a class="btn btn-spotify" id="mSpotify" href="#" target="_blank" rel="noopener">Dengarkan di Spotify</a>
+    </div>
+  </div>
+
+  <script>
+    // ====== EDIT DATA ALBUM DI SINI ======
+    // cover  : nama file di folder imgalbm/
+    // spotify: ganti dengan link album asli di Spotify
+    const albums = [
+      {
+        judul: "Alfredo 2",
+        artist: "Freddie Gibbs & The Alchemist",
+        cover: "imgalbm/97a5aa24de7948fc9135016f9980cfed.jpg",
+        deskripsi: "Album kolaborasi Freddie Gibbs dan produser The Alchemist yang dirilis pada 2025. Sebagai kelanjutan dari Alfredo (2020), proyek ini memadukan rap Freddie yang tajam dengan produksi The Alchemist yang atmosferik, penuh tekstur soul, dan terasa sinematik.",
+        tracks: [
+          "1995",
+          "Mar-a-Lago",
+          "Lemon Pepper Steppers",
+          "Ensalada (feat. Anderson .Paak)",
+          "Empanadas",
+          "Skinny Suge II",
+          "Feeling (feat. Larry June)",
+          "I Still Love H.E.R.",
+          "Shangri La",
+          "Gas Station Sushi",
+          "Lavish Habits",
+          "Gold Feet (feat. JID)",
+          "Jean Claude",
+          "A Thousand Mountains"
+        ],
+        spotify: "https://open.spotify.com/album/5WrpCQmbTUZuzNxGCPUFSV?si=9CKhfuqqRUuL12SUk9jcig&utm_source=copy-link"
+      },
+      {
+        judul: "The Stranger",
+        artist: "Billy Joel",
+        cover: "imgalbm/d2d13b9964b51af00e6596221c99ca10.jpg",
+        deskripsi: "Album studio kelima Billy Joel, dirilis pada 29 September 1977 dan diproduseri Phil Ramone. Menggabungkan pop rock dan soft rock dengan penulisan lagu yang kuat, album ini menjadi titik balik besar dalam karier Joel. Isinya bergerak dari cerita kehidupan sehari-hari hingga refleksi personal, termasuk lagu klasik seperti “Scenes from an Italian Restaurant” dan “Vienna”.",
+        tracks: [
+          "Movin' Out (Anthony's Song)",
+          "The Stranger",
+          "Just the Way You Are",
+          "Scenes from an Italian Restaurant",
+          "Vienna",
+          "Only the Good Die Young",
+          "She's Always a Woman",
+          "Get It Right the First Time",
+          "Everybody Has a Dream"
+        ],
+        spotify: "https://open.spotify.com/album/1Mhn9VosyjtWn4dMPFlna6?si=GeFcjq-RTR2JP8uPhHevYQ&utm_source=copy-link"
+      },
+      {
+        judul: "Pray for Paris",
+        artist: "Westside Gunn",
+        cover: "imgalbm/2a573a11a282b2e13a41dbbe8d994ad3.jpg",
+        deskripsi: "Album studio Westside Gunn yang dirilis pada 17 April 2020 melalui Griselda Records. Proyek hip-hop ini membawa ciri khas Griselda: rap penuh detail, ad-lib yang ikonik, dan produksi bernuansa gelap sekaligus mewah. Estetika fashion kelas atas dan referensi gulat profesional turut membentuk identitas album ini; sampulnya dirancang oleh Virgil Abloh.",
+        tracks: [
+          "400 Million Plus Tax",
+          "No Vacancy",
+          "George Bondo",
+          "327",
+          "French Toast",
+          "Euro Step",
+          "Allah Sent Me",
+          "$500 Ounces",
+          "Versace",
+          "Claiborne Kick",
+          "Shawn vs. Flair",
+          "Party wit Pop Smoke",
+          "LE Djoliba"
+        ],
+        spotify: "https://open.spotify.com/album/6nfJMRoIjyRwk3ZTHNm0PY?si=I8OpbYKQR4iPKM41jbWXFw&utm_source=copy-link"
+      },
+      {
+        judul: "In the Court of the Crimson King",
+        artist: "King Crimson",
+        cover: "imgalbm/3174088049fd36ff393bcf5bd5c727ea.jpg",
+        deskripsi: "Album debut King Crimson yang dirilis pada 10 Oktober 1969. Karya penting dalam perkembangan progressive rock ini memadukan rock, jazz, dan nuansa klasik dengan perubahan dinamika yang dramatis. Dari energi intens “21st Century Schizoid Man” hingga atmosfer megah lagu penutupnya, album ini dikenal karena pendekatan musiknya yang ambisius dan eksperimental.",
+        tracks: [
+          "21st Century Schizoid Man",
+          "I Talk to the Wind",
+          "Epitaph",
+          "Moonchild",
+          "The Court of the Crimson King"
+        ],
+        spotify: "https://open.spotify.com/album/75ol9OP8bJaRqzGimpFHDm?si=14eVLWUmSW69ywhaicyz8w&utm_source=copy-link"
+      },
+      {
+        judul: "good kid, m.A.A.d city",
+        artist: "Kendrick Lamar",
+        cover: "imgalbm/f9327a848e09ab5fb71cd2f86bce0212 (1).jpg",
+        deskripsi: "Album major-label debut Kendrick Lamar yang dirilis pada 22 Oktober 2012, dengan subtitle “A Short Film by Kendrick Lamar”. Disusun seperti film naratif, album ini mengikuti pengalaman seorang remaja di Compton dan mengeksplorasi pengaruh lingkungan, tekanan pergaulan, keluarga, serta pencarian jati diri. Cerita yang saling terhubung dan produksi yang beragam menjadikannya salah satu album hip-hop paling berpengaruh pada masanya.",
+        tracks: [
+          "Sherane a.k.a Master Splinter's Daughter",
+          "Bitch, Don't Kill My Vibe",
+          "Backseat Freestyle",
+          "The Art of Peer Pressure",
+          "Money Trees",
+          "Poetic Justice",
+          "good kid",
+          "m.A.A.d city",
+          "Swimming Pools (Drank)",
+          "Sing About Me, I'm Dying Of Thirst",
+          "Real",
+          "Compton"
+        ],
+        spotify: "https://open.spotify.com/album/748dZDqSZy6aPXKcI9H80u?si=ceL5OeeVR_yFTtVjYweEdw&utm_source=copy-link"
+      }
+    ];
+    // =====================================
+
+    // ====== EDIT DATA TOP TRACKS DI SINI ======
+    // cover: nama file di folder imgalbm/
+    const topTracks = [
+      { judul: "Rindu Aku Rindu Kamu", artist: "Doel Sumbang, Nini Carlina", cover: "imgalbm/track1.jpg",
+        deskripsi: "Duet Doel Sumbang dan Nini Carlina yang bercerita tentang sepasang kekasih yang saling merindu dan dimabuk asmara di tepi pantai. Perpaduan pop dan dangdut yang riang ini jadi salah satu kolaborasi paling dikenal keduanya.",
+        spotify: "https://open.spotify.com/track/3Gupp8x0uDuRyzBwQfxGgC?si=psatQmiQSDyy0o1OnMUoxw&utm_source=copy-link" },
+      { judul: "Movin' Out", : "Billy Joel", cover: "imgalbm/track2.jpg",
+        deskripsi: "Lagu pembuka album The Stranger (1977) karya Billy Joel, diproduseri Phil Ramone. Isinya mengkritik obsesi mengejar status dan kenaikan kelas sosial, dengan chorus yang menolak anggapan itu sebagai kemajuan. Lagu ini sempat masuk Top 20 dan menutup dengan efek suara mobil yang melaju pergi.",
+        spotify: "https://open.spotify.com/track/16GUMo6u3D2qo9a19AkYct?si=019EFu_8SCGAQe5APmygSQ&utm_source=copy-link" },
+      { judul: "So Be It", artist: "Clipse", cover: "imgalbm/track3.jpg",
+        deskripsi: "Single dari album Let God Sort Em Out (2025), reuni Clipse (Pusha T dan Malice) setelah sekitar 16 tahun, dengan seluruh album diproduseri Pharrell. Beat-nya memadukan sampel string bernuansa Timur Tengah dengan 808 yang diputar terbalik, sementara verse penutup Pusha T ramai dibahas karena menyindir Travis Scott.",
+        spotify: "https://open.spotify.com/track/0xaQ86cGRgcF8wwP1SkXsb?si=12bGwpN8Rvu8V2kE9bN1mg&utm_source=copy-link" },
+      { judul: "Never Let Me Down", artist: "Kanye West, JAY-Z & J. Ivy", cover: "imgalbm/track4.jpg",
+        deskripsi: "Lagu dari album debut Kanye West, The College Dropout (2004), dengan Jay-Z dan penyair J. Ivy. Kanye dan Jay-Z bertukar bait soal bertahan menghadapi rintangan, lalu J. Ivy menutupnya dengan puisi tentang iman. Sering dianggap salah satu deep cut terbaik di album itu.",
+        spotify: "https://open.spotify.com/track/34j4OxJxKznBs88cjSL2j9?si=j821M-ctTI-mUAFao-9Ftg&utm_source=copy-link" },
+      { judul: "Simpan Saja", artist: "Ecoutez", cover: "imgalbm/track5.jpg",
+        deskripsi: "Single pertama band Ecoutez asal Jakarta dari album debut Ekute (2006), disusul Percayalah dan Tunjuk Satu Bintang. Lagu pop ini sempat jadi top request di radio-radio Indonesia dan sampai sekarang masih jadi salah satu lagu andalan mereka di konser.",
+        spotify: "https://open.spotify.com/track/6nIptzv5jqfdiDw9Aen0Ad?si=czbfuZK8TXO0aVn4QR_GnQ&utm_source=copy-link" }
+    ];
+    // ==========================================
+
+    const grid = document.getElementById("albumGrid");
+    const modal = document.getElementById("modal");
+    let terakhirFokus = null;
+
+    albums.forEach(a => {
+      const tombol = document.createElement("button");
+      tombol.className = "album-item";
+      tombol.type = "button";
+      tombol.innerHTML =
+        '<img src="' + a.cover + '" alt="Cover ' + a.judul + '" loading="lazy">' +
+        '<div class="album-info"><strong></strong><span></span></div>';
+      tombol.querySelector("strong").textContent = a.judul;
+      tombol.querySelector("span").textContent = a.artist;
+      tombol.addEventListener("click", () => buka(a, tombol));
+      grid.appendChild(tombol);
+    });
+
+    const daftarTrack = document.getElementById("trackList");
+    topTracks.forEach(t => {
+      const tombol = document.createElement("button");
+      tombol.className = "track-item";
+      tombol.type = "button";
+      tombol.innerHTML =
+        '<img src="' + t.cover + '" alt="Cover ' + t.judul + '" loading="lazy">' +
+        '<div class="track-info"><strong></strong><span></span></div>' +
+        '<span class="track-panah" aria-hidden="true">›</span>';
+      tombol.querySelector("strong").textContent = t.judul;
+      tombol.querySelector(".track-info span").textContent = t.artist;
+      tombol.addEventListener("click", () => buka(t, tombol));
+      daftarTrack.appendChild(tombol);
+    });
+
+    // a = album (punya tracks) atau single track (tanpa tracks)
+    function buka(a, pemicu) {
+      terakhirFokus = pemicu;
+      document.getElementById("mCover").src = a.cover;
+      document.getElementById("mCover").alt = "Cover " + a.judul;
+      document.getElementById("mJudul").textContent = a.judul;
+      document.getElementById("mArtist").textContent = a.artist;
+      document.getElementById("mDeskripsi").textContent = a.deskripsi;
+      document.getElementById("mSpotify").href = a.spotify;
+      const ol = document.getElementById("mTracks");
+      ol.innerHTML = "";
+      const adaTracks = Array.isArray(a.tracks);
+      document.getElementById("mTrackWrap").style.display = adaTracks ? "" : "none";
+      if (adaTracks) {
+        a.tracks.forEach(t => {
+          const li = document.createElement("li");
+          li.textContent = t;
+          ol.appendChild(li);
+        });
+      }
+      modal.classList.add("tampil");
+      document.body.style.overflow = "hidden";
+      document.getElementById("mTutup").focus();
+    }
+
+    function tutup() {
+      modal.classList.remove("tampil");
+      document.body.style.overflow = "";
+      if (terakhirFokus) terakhirFokus.focus();
+    }
+
+    document.getElementById("mTutup").addEventListener("click", tutup);
+    modal.addEventListener("click", e => { if (e.target === modal) tutup(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") tutup(); });
+  </script>
+
+</body>
+</html>
