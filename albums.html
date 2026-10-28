@@ -163,21 +163,41 @@
     // ====== EDIT DATA TOP TRACKS DI SINI ======
     // cover: nama file di folder imgalbm/
     const topTracks = [
-      { judul: "Rindu Aku Rindu Kamu", artist: "Doel Sumbang, Nini Carlina", cover: "imgalbm/track1.jpg",
+      {
+        judul: "Rindu Aku Rindu Kamu",
+        artist: "Doel Sumbang, Nini Carlina",
+        cover: "imgalbm/track1.jpg",
         deskripsi: "Duet Doel Sumbang dan Nini Carlina yang bercerita tentang sepasang kekasih yang saling merindu dan dimabuk asmara di tepi pantai. Perpaduan pop dan dangdut yang riang ini jadi salah satu kolaborasi paling dikenal keduanya.",
-        spotify: "https://open.spotify.com/track/3Gupp8x0uDuRyzBwQfxGgC?si=psatQmiQSDyy0o1OnMUoxw&utm_source=copy-link" },
-      { judul: "Movin' Out", : "Billy Joel", cover: "imgalbm/track2.jpg",
+        spotify: "https://open.spotify.com/track/3Gupp8x0uDuRyzBwQfxGgC?si=psatQmiQSDyy0o1OnMUoxw&utm_source=copy-link"
+      },
+      {
+        judul: "Movin' Out",
+        artist: "Billy Joel",
+        cover: "imgalbm/track2.jpg",
         deskripsi: "Lagu pembuka album The Stranger (1977) karya Billy Joel, diproduseri Phil Ramone. Isinya mengkritik obsesi mengejar status dan kenaikan kelas sosial, dengan chorus yang menolak anggapan itu sebagai kemajuan. Lagu ini sempat masuk Top 20 dan menutup dengan efek suara mobil yang melaju pergi.",
-        spotify: "https://open.spotify.com/track/16GUMo6u3D2qo9a19AkYct?si=019EFu_8SCGAQe5APmygSQ&utm_source=copy-link" },
-      { judul: "So Be It", artist: "Clipse", cover: "imgalbm/track3.jpg",
+        spotify: "https://open.spotify.com/track/16GUMo6u3D2qo9a19AkYct?si=019EFu_8SCGAQe5APmygSQ&utm_source=copy-link"
+      },
+      {
+        judul: "So Be It",
+        artist: "Clipse",
+        cover: "imgalbm/track3.jpg",
         deskripsi: "Single dari album Let God Sort Em Out (2025), reuni Clipse (Pusha T dan Malice) setelah sekitar 16 tahun, dengan seluruh album diproduseri Pharrell. Beat-nya memadukan sampel string bernuansa Timur Tengah dengan 808 yang diputar terbalik, sementara verse penutup Pusha T ramai dibahas karena menyindir Travis Scott.",
-        spotify: "https://open.spotify.com/track/0xaQ86cGRgcF8wwP1SkXsb?si=12bGwpN8Rvu8V2kE9bN1mg&utm_source=copy-link" },
-      { judul: "Never Let Me Down", artist: "Kanye West, JAY-Z & J. Ivy", cover: "imgalbm/track4.jpg",
+        spotify: "https://open.spotify.com/track/0xaQ86cGRgcF8wwP1SkXsb?si=12bGwpN8Rvu8V2kE9bN1mg&utm_source=copy-link"
+      },
+      {
+        judul: "Never Let Me Down",
+        artist: "Kanye West, JAY-Z & J. Ivy",
+        cover: "imgalbm/track4.jpg",
         deskripsi: "Lagu dari album debut Kanye West, The College Dropout (2004), dengan Jay-Z dan penyair J. Ivy. Kanye dan Jay-Z bertukar bait soal bertahan menghadapi rintangan, lalu J. Ivy menutupnya dengan puisi tentang iman. Sering dianggap salah satu deep cut terbaik di album itu.",
-        spotify: "https://open.spotify.com/track/34j4OxJxKznBs88cjSL2j9?si=j821M-ctTI-mUAFao-9Ftg&utm_source=copy-link" },
-      { judul: "Simpan Saja", artist: "Ecoutez", cover: "imgalbm/track5.jpg",
+        spotify: "https://open.spotify.com/track/34j4OxJxKznBs88cjSL2j9?si=j821M-ctTI-mUAFao-9Ftg&utm_source=copy-link"
+      },
+      {
+        judul: "Simpan Saja",
+        artist: "Ecoutez",
+        cover: "imgalbm/track5.jpg",
         deskripsi: "Single pertama band Ecoutez asal Jakarta dari album debut Ekute (2006), disusul Percayalah dan Tunjuk Satu Bintang. Lagu pop ini sempat jadi top request di radio-radio Indonesia dan sampai sekarang masih jadi salah satu lagu andalan mereka di konser.",
-        spotify: "https://open.spotify.com/track/6nIptzv5jqfdiDw9Aen0Ad?si=czbfuZK8TXO0aVn4QR_GnQ&utm_source=copy-link" }
+        spotify: "https://open.spotify.com/track/6nIptzv5jqfdiDw9Aen0Ad?si=czbfuZK8TXO0aVn4QR_GnQ&utm_source=copy-link"
+      }
     ];
     // ==========================================
 
@@ -185,33 +205,25 @@
     const modal = document.getElementById("modal");
     let terakhirFokus = null;
 
-    albums.forEach(a => {
+    // Bikin satu tombol kartu (album / track) lalu pasang event klik
+    function buatItem(data, kelas, kelasInfo, panah) {
       const tombol = document.createElement("button");
-      tombol.className = "album-item";
+      tombol.className = kelas;
       tombol.type = "button";
       tombol.innerHTML =
-        '<img src="' + a.cover + '" alt="Cover ' + a.judul + '" loading="lazy">' +
-        '<div class="album-info"><strong></strong><span></span></div>';
-      tombol.querySelector("strong").textContent = a.judul;
-      tombol.querySelector("span").textContent = a.artist;
-      tombol.addEventListener("click", () => buka(a, tombol));
-      grid.appendChild(tombol);
-    });
+        '<img src="' + data.cover + '" alt="Cover ' + data.judul + '" loading="lazy">' +
+        '<div class="' + kelasInfo + '"><strong></strong><span></span></div>' +
+        (panah ? '<span class="track-panah" aria-hidden="true">›</span>' : "");
+      tombol.querySelector("strong").textContent = data.judul;
+      tombol.querySelector("." + kelasInfo + " span").textContent = data.artist;
+      tombol.addEventListener("click", () => buka(data, tombol));
+      return tombol;
+    }
 
     const daftarTrack = document.getElementById("trackList");
-    topTracks.forEach(t => {
-      const tombol = document.createElement("button");
-      tombol.className = "track-item";
-      tombol.type = "button";
-      tombol.innerHTML =
-        '<img src="' + t.cover + '" alt="Cover ' + t.judul + '" loading="lazy">' +
-        '<div class="track-info"><strong></strong><span></span></div>' +
-        '<span class="track-panah" aria-hidden="true">›</span>';
-      tombol.querySelector("strong").textContent = t.judul;
-      tombol.querySelector(".track-info span").textContent = t.artist;
-      tombol.addEventListener("click", () => buka(t, tombol));
-      daftarTrack.appendChild(tombol);
-    });
+
+    albums.forEach(a => grid.appendChild(buatItem(a, "album-item", "album-info", false)));
+    topTracks.forEach(t => daftarTrack.appendChild(buatItem(t, "track-item", "track-info", true)));
 
     // a = album (punya tracks) atau single track (tanpa tracks)
     function buka(a, pemicu) {
